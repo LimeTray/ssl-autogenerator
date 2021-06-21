@@ -1,0 +1,160 @@
+{
+    "autoConfig": true,
+    "version": "1.0.0",
+    "port": 3000,
+    "environment": [
+        {
+            "name": "NODE_ENV",
+            "value": "{{namespace}}"
+        },
+        {
+            "name": "SSLFORFREE_API_KEY",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "sslforfreeapikey"
+                }
+            }
+        },
+        {
+            "name": "BASE_URL",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "sslbaseurl"
+                }
+            }
+        },
+        {
+            "name": "LOG_LEVEL",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "loglevel"
+                }
+            }
+        },
+        {
+            "name": "DB_NAME",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "dbname"
+                }
+            }
+        },
+        {
+            "name": "DB_HOST",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-cms-db",
+                    "key": "host"
+                }
+            }
+        },
+        {
+            "name": "DB_PORT",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-cms-db",
+                    "key": "port"
+                }
+            }
+        },
+        {
+            "name": "DB_SALVE_HOST",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-cms-db",
+                    "key": "slavehost"
+                }
+            }
+        },
+        {
+            "name": "DB_SALVE_PORT",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-cms-db",
+                    "key": "slaveport"
+                }
+            }
+        },
+        {
+            "name": "DB_USERNAME",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "username"
+                }
+            }
+        },
+        {
+            "name": "DB_PASSWORD",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "password"
+                }
+            }
+        },
+        {
+            "name": "AWS_ACCESS_KEY_ID",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-aws-sqs-s3",
+                    "key": "key"
+                }
+            }
+        },
+        {
+            "name": "AWS_SECRET_KEY",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-aws-sqs-s3",
+                    "key": "secret"
+                }
+            }
+        },
+        {
+            "name": "AWS_REGION",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-aws-sqs-s3",
+                    "key": "region"
+                }
+            }
+        },
+        {
+            "name": "AWS_BUCKET",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "bucket"
+                }
+            }
+        },
+        {
+            "name": "S3_DOMAIN",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "s3domain"
+                }
+            }
+        },
+        {
+            "name": "DELAYED_QUEUE",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "ssl-generator-service",
+                    "key": "delayedqueue"
+                }
+            }
+        }
+    ],
+    "tier": "backend",
+    "owner": "shubhamnegi",
+    "labels": {
+        "group": "certification"
+    }
+}
