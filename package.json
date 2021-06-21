@@ -1,5 +1,5 @@
 {
-  "name": "ssl-autogenerator",
+  "name": "ssl-generator-service",
   "version": "1.0.0",
   "description": "## Goal Goal is to register a new domain, and create a certificate on a defined interval. Application will use sslforfree to register, validate and create new certificate. Once a certificate is generated it will be uploaded to the proxy server using queue.",
   "main": "index.js",
