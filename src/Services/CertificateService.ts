@@ -215,6 +215,7 @@ export class CertificateService {
 
         // Update database
         result = await AutomatedCertificatesRepository.updateCertificates(certificateId, caBundleS3Fullpath, certificateS3Fullpath)
+        log.info('final state '+JSON.stringify(result))
 
         // push to qee
 
@@ -223,13 +224,13 @@ export class CertificateService {
             log.debug('push to ' + g.certificateQueue)
             const data: any = {
                 "brandId": brandId,
-                "crtFilePath": result.certificateCrtPath,
+                "crtFilePath": certificateS3Fullpath,
                 "crtKeyFilePath": result.certificateKeyPath,
                 "crtDomainName": result.domainName,
                 "crtIssuer": result.issuer,
                 "crtType": 1,
                 "crtDomainType": result.domainType,
-                "crtCaBundlePath": result.certificateCaBundlePath,
+                "crtCaBundlePath": caBundleS3Fullpath,
                 "crtExpiredDate": result.expiryDate,
                 "crtUserEmail": "",
                 "timezone": "Asia/Kolkata",
