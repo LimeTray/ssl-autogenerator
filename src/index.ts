@@ -27,6 +27,8 @@ const applicationLogger = getLogger("application-logger")
 const app = express();
 const port = 8080; // default port to listen
 
+app.use(express.json())
+
 app.get('/health', (req, res, next) => {
     return res.json({ status: "up" })
 })
