@@ -277,7 +277,7 @@ export class CertificateService {
                 waitTime
             );
             waitTime = waitTime + 60
-            log.debug("pushed message to delayed queue " + delayedMessageFormatted+ " with wait time "+waitTime);
+            log.info("pushed message to delayed queue " + delayedMessageFormatted+ " with wait time "+waitTime);
         }
     }
 
