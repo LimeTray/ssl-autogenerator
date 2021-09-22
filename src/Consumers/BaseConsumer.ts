@@ -43,8 +43,13 @@ export class BaseConsumer {
                     BaseConsumer.sleep(10000) // sleep for 10 sec;
                 }
                 for (const message of messages) {
-                    await this.handle(message);
-                    this.deleteMessage(message.ReceiptHandle as string);
+                    try{
+                        await this.handle(message);
+                        this.deleteMessage(message.ReceiptHandle as string);
+                    }
+                    catch(error){
+                        this.logger.error(error)
+                    }                    
                 }
             } catch (error) {
                 this.logger.error(error)
