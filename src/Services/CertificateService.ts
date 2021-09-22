@@ -266,7 +266,7 @@ export class CertificateService {
 
         const result = await AutomatedCertificatesRepository.getExpiringCertificates()
         log.info(result.length + " domains for renewal");
-
+        let waitTime = 60;
         for (const i of result) {
             log.debug("pushing message to " + delayedQueue);
             const delayedMessage = delayedQueueFormatter(i.certificateHash, NextActionEnum.RENEW_CERTITICATE)
@@ -274,9 +274,10 @@ export class CertificateService {
             await AwsService.pushMessageToQueue(
                 delayedMessageFormatted,
                 delayedQueue,
-                60
+                waitTime
             );
-            log.debug("pushed message to delayed queue " + delayedMessageFormatted);
+            waitTime = waitTime + 60
+            log.debug("pushed message to delayed queue " + delayedMessageFormatted+ " with wait time "+waitTime);
         }
     }
 
