@@ -59,13 +59,6 @@ export class AutomatedCertificatesRepository {
         if (!cert) {
             throw new CertificateNotFound(domainName);
         }
-        const currentDate = new Date();
-        const expiryDate = new Date(new Date(currentDate).setDate(currentDate.getDate() + 90))
-
-        cert.set('certificateHash', certificateHash);
-        cert.set('autoRenewedOn', currentDate);
-        cert.set('expiryDate', expiryDate);
-
         await cert.save();
         cert = await cert.reload();
         return cert;
@@ -144,8 +137,18 @@ export class AutomatedCertificatesRepository {
         if (!cert) {
             throw new CertificateNotFound(certificateHash);
         }
+
+        const currentDate = new Date();
+        const expiryDate = new Date(new Date(currentDate).setDate(currentDate.getDate() + 90))
+
         cert.set('certificateCaBundlePath', caBundle);
         cert.set('certificateCrtPath', certificate);
+        
+        // Update dates
+
+        cert.set('autoRenewedOn', currentDate);
+        cert.set('expiryDate', expiryDate);
+
         await cert.save();
         cert = await cert.reload()
         return cert.toJSON() as AutomatedCertificateInteface;
