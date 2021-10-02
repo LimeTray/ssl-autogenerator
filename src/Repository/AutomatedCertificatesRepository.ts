@@ -59,6 +59,7 @@ export class AutomatedCertificatesRepository {
         if (!cert) {
             throw new CertificateNotFound(domainName);
         }
+        cert.set('certificateHash', certificateHash);
         await cert.save();
         cert = await cert.reload();
         return cert;
@@ -143,7 +144,7 @@ export class AutomatedCertificatesRepository {
 
         cert.set('certificateCaBundlePath', caBundle);
         cert.set('certificateCrtPath', certificate);
-        
+
         // Update dates
 
         cert.set('autoRenewedOn', currentDate);
