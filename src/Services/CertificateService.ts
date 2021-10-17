@@ -66,7 +66,7 @@ export class CertificateService {
                 request.domainName,
                 certResult.data.id
             )
-            await AutomatedCertificatesRepository.incrementRetryAttempt(certResult.data.id)
+            await AutomatedCertificatesRepository.incrementRetryAttempt(request.domainName)
         }
 
 
@@ -269,7 +269,7 @@ export class CertificateService {
         log.info(result.length + " domains for renewal");
         let waitTime = 60;
         for (const i of result) {
-            log.debug("pushing message to " + delayedQueue);
+            log.info("pushing message to " + delayedQueue);
             const delayedMessage = delayedQueueFormatter(i.certificateHash, NextActionEnum.RENEW_CERTITICATE)
             const delayedMessageFormatted = messageFormatter('CREATE', delayedMessage)
             await AwsService.pushMessageToQueue(

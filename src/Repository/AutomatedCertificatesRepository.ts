@@ -65,12 +65,12 @@ export class AutomatedCertificatesRepository {
         return cert;
     }
 
-    public static async incrementRetryAttempt(certificateHash: string) {
+    public static async incrementRetryAttempt(domainName: string) {
         let cert = await AutomatedCertificates.findOne({
-            where: { certificateHash }
+            where: { domainName }
         })
         if (!cert) {
-            throw new CertificateNotFound(certificateHash);
+            throw new CertificateNotFound(domainName);
         }
         await cert.increment('retryAttempt', { by: 1 })    
     }
