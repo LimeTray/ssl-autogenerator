@@ -15,13 +15,13 @@ export class DelayedQueueConsumer extends BaseConsumer {
         const certificateHash = data.payload.certificateHash;
         switch (action) {
             case NextActionEnum.RENEW_CERTITICATE:
-                CertificateService.renewDomain(certificateHash)
+                await CertificateService.renewDomain(certificateHash)
                 break;
             case NextActionEnum.VALIDATE:
-                CertificateService.triggerValidation(certificateHash);
+                await CertificateService.triggerValidation(certificateHash);
                 break;
             case NextActionEnum.VALIDATION_STATUS:
-                CertificateService.getValidationStatus(certificateHash);
+                await CertificateService.getValidationStatus(certificateHash);
                 break
             default:
                 log.error("action " + action + " is not handled");
