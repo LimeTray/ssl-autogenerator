@@ -87,6 +87,13 @@ describe('Test suite for mysql', () => {
         expect(Array.isArray(res)).to.be.eql(true)
     })
 
+    it('should be able retry increment count', async () => {
+        const res = await AutomatedCertificatesRepository.incrementRetryAttempt("9ea86bad8e688736822266ec36420063")
+        const cert = await AutomatedCertificatesRepository.getCertificateByHash("9ea86bad8e688736822266ec36420063");
+
+        expect(cert.retryAttempt).to.be.greaterThan(0)
+    })
+
     after(() => {
         Mysql.closeConnection();
     })

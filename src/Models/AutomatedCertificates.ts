@@ -52,6 +52,10 @@ export const AutomatedCertificates = sequelize.define('AutomatedCertificates', {
     domainType: {
         type: DataTypes.ENUM,
         values: ['internal', 'external']
+    },
+    retryAttempt: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 }, {
     tableName: "automated_certificates",
@@ -63,4 +67,4 @@ export const AutomatedCertificates = sequelize.define('AutomatedCertificates', {
         fields: ['expiryDate']
     }]
 });
-// AutomatedCertificates.sync({ force: true });
+// AutomatedCertificates.sync({ alter: true });

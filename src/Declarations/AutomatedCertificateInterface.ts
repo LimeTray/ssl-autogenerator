@@ -1,5 +1,5 @@
 export interface AutomatedCertificate {
-    id?: number;
+    id?: number,
     domainName: string,
     brandId: string,
     certificateHash: string,
@@ -14,6 +14,7 @@ export interface AutomatedCertificate {
     domainType: string,
     createdAt?: Date,
     updatedAt?: Date,
+    retryAttempt?: number
 }
 
 export interface AutomatedCertificateRequest {

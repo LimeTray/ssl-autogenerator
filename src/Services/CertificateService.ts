@@ -66,6 +66,7 @@ export class CertificateService {
                 request.domainName,
                 certResult.data.id
             )
+            await AutomatedCertificatesRepository.incrementRetryAttempt(certResult.data.id)
         }
 
 
@@ -215,7 +216,7 @@ export class CertificateService {
 
         // Update database
         result = await AutomatedCertificatesRepository.updateCertificates(certificateId, caBundleS3Fullpath, certificateS3Fullpath)
-        log.info('final state '+JSON.stringify(result))
+        log.info('final state ' + JSON.stringify(result))
 
         // push to qee
 
@@ -276,7 +277,7 @@ export class CertificateService {
                 delayedQueue,
                 waitTime
             );
-            log.info("pushed message to delayed queue " + delayedMessageFormatted+ " with wait time "+waitTime);
+            log.info("pushed message to delayed queue " + delayedMessageFormatted + " with wait time " + waitTime);
             waitTime = waitTime + 60
         }
     }
