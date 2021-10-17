@@ -65,6 +65,16 @@ export class AutomatedCertificatesRepository {
         return cert;
     }
 
+    public static async incrementRetryAttempt(certificateHash: string) {
+        let cert = await AutomatedCertificates.findOne({
+            where: { certificateHash }
+        })
+        if (!cert) {
+            throw new CertificateNotFound(certificateHash);
+        }
+        await cert.increment('retryAttempt', { by: 1 })    
+    }
+
     /**
      * To update challenge file only
      * @param certificateHash 
@@ -156,7 +166,7 @@ export class AutomatedCertificatesRepository {
     }
 
     public static async getExpiringCertificates() {
-        const literal = 'Date(CURRENT_DATE) >  Date(date_sub(expiryDate ,INTERVAL 10 DAY))'
+        const literal = 'Date(CURRENT_DATE) >  Date(date_sub(expiryDate ,INTERVAL 10 DAY)) and retryAttempt < 3'
         const res = await AutomatedCertificates.findAll({ where: Sequelize.literal(literal) })
         return res.map(x => x.toJSON()) as AutomatedCertificateInteface[]
     }
