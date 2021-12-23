@@ -80,21 +80,29 @@ describe('Test suite for mysql', () => {
     //     expect(result.autoRenewedOn).to.be.not.null;
     // })
 
-    it('should be able to get expiring certificate', async () => {
-        const res = await AutomatedCertificatesRepository.getExpiringCertificates()
-        console.log(res)
-        expect(res).to.be.not.null
-        expect(Array.isArray(res)).to.be.eql(true)
-    })
+    // it('should be able to get expiring certificate', async () => {
+    //     const res = await AutomatedCertificatesRepository.getExpiringCertificates()
+    //     console.log(res)
+    //     expect(res).to.be.not.null
+    //     expect(Array.isArray(res)).to.be.eql(true)
+    // })
 
-    it('should be able retry increment count', async () => {
-        const res = await AutomatedCertificatesRepository.incrementRetryAttempt("9ea86bad8e688736822266ec36420063")
-        const cert = await AutomatedCertificatesRepository.getCertificateByHash("9ea86bad8e688736822266ec36420063");
+    // it('should be able retry increment count', async () => {
+    //     const res = await AutomatedCertificatesRepository.incrementRetryAttempt("9ea86bad8e688736822266ec36420063")
+    //     const cert = await AutomatedCertificatesRepository.getCertificateByHash("9ea86bad8e688736822266ec36420063");
 
-        expect(cert.retryAttempt).to.be.greaterThan(0)
-    })
+    //     expect(cert.retryAttempt).to.be.greaterThan(0)
+    // })
+
+    it("Should be able to reset retry counter ", async () => {
+        const domainName = "lechef.co.in"
+        const res = await AutomatedCertificatesRepository.resetRetryCounter(domainName);
+        const cert = await AutomatedCertificatesRepository.getCertificateByDomainName(domainName);
+
+        expect(cert.retryAttempt).to.be.eqls(0)        
+    }).timeout(10000)
 
     after(() => {
         Mysql.closeConnection();
     })
-})
+}).timeout(10000)

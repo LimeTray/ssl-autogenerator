@@ -295,4 +295,9 @@ export class CertificateService {
         )
     }
 
+    public static async resetRetrycounter(domainName: string) {
+        const result = await AutomatedCertificatesRepository.resetRetryCounter(domainName)
+        return result.toJSON()
+    }
+
 }
