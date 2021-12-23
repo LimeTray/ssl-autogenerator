@@ -72,7 +72,20 @@ export class AutomatedCertificatesRepository {
         if (!cert) {
             throw new CertificateNotFound(domainName);
         }
-        await cert.increment('retryAttempt', { by: 1 })    
+        await cert.increment('retryAttempt', { by: 1 })
+    }
+
+    public static async resetRetryCounter(domainName: string) {
+        let cert = await AutomatedCertificates.findOne({
+            where: { domainName }
+        });
+        if (!cert) {
+            throw new CertificateNotFound(domainName);
+        }
+        cert.set('retryAttempt', 0);
+        await cert.save();
+        cert = await cert.reload()
+        return cert;
     }
 
     /**

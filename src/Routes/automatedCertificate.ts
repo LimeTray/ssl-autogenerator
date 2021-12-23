@@ -27,3 +27,14 @@ automatedCertificateRoute.post('/renew', async (req: CustomRequest, res: any, ne
         next(error)
     }
 })
+
+automatedCertificateRoute.post('/reset-retry-counter', async (req: CustomRequest, res: any, next: any) => {
+    const log = req.log
+    try {
+        const result = await CertificateService.resetRetrycounter(req.body.domainName)
+        return res.status(200).json({ result })
+    } catch (error) {
+        log.error(error)
+        next(error)
+    }
+});
