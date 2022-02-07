@@ -46,7 +46,7 @@ export class CertificateService {
         const uniqeCertName = new Date().getTime().toString();
         const certResult = await sslForFree.createCertificate(csrRequest, uniqeCertName);
 
-        log.debug(certResult.data);
+        log.info(certResult.data);
 
         if (!renewRequest) {
             // if new registration
