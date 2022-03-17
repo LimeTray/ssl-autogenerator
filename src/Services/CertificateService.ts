@@ -182,7 +182,7 @@ export class CertificateService {
         // Download certificate
         await ssl.downloadCertificate(certificateId);
 
-        await sleep(1000);
+        await sleep(5000);
 
         // Unzip         
         unzipHelper(
