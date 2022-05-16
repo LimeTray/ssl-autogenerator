@@ -1,7 +1,7 @@
 FROM node:16-slim
 
 RUN apt-get update -y
-RUN apt-get install zip unzip openssl -y
+RUN apt-get install zip unzip p7zip-full openssl -y
 
 WORKDIR /usr/src/app
 
