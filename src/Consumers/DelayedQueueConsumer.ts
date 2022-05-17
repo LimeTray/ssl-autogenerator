@@ -9,7 +9,7 @@ export class DelayedQueueConsumer extends BaseConsumer {
 
     async handle(message: Message) {
         const log = this.logger.child({ id: message.MessageId });
-        log.debug(message.Body);
+        log.info(message.Body);
         const data = JSON.parse(message.Body as string);
         const action = data.payload.nextAction;
         const certificateHash = data.payload.certificateHash;
