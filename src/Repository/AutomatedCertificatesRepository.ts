@@ -172,6 +172,7 @@ export class AutomatedCertificatesRepository {
 
         cert.set('autoRenewedOn', currentDate);
         cert.set('expiryDate', expiryDate);
+        cert.set('retryAttempt', 0); // reset retry attempt
 
         await cert.save();
         cert = await cert.reload()
