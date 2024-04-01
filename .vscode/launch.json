@@ -18,6 +18,26 @@
             ],
             "outputCapture": "console",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Debug",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeArgs": [
+                "${workspaceRoot}/node_modules/.bin/mocha",
+                "--inspect-brk",
+                "${relativeFile}",
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "preLaunchTask": "build",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
