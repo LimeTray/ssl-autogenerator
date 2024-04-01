@@ -15,6 +15,7 @@ import { unzipHelper } from '../Helpers/unzipHelper';
 import { tempDir } from '../Constants/SSL_FOR_FREE';
 import path from 'path';
 import { readFileSync } from 'fs'
+import { sendErrorToSlack } from '../Helpers/slackHelper'
 
 
 export class CertificateService {
@@ -148,6 +149,10 @@ export class CertificateService {
         if (validationResult.data.error) {
             // Error occured;
             log.error(validationResult.data.error);
+            await sendErrorToSlack(
+                "Error validating certificate for " + domainName,
+                "SSL VALIDATION ERROR",
+            )
             throw new Error("Error validating certificate");
         }
         // On successfull validation 
@@ -177,6 +182,10 @@ export class CertificateService {
         const validationResult = await ssl.getValidationStatus(certificateId);
 
         if (validationResult.data.validation_completed === 0) {
+            await sendErrorToSlack(
+                "Error getting validation status for " + domainName,
+                "SSL VALIDATION STATUS ERROR",
+            )
             throw new Error("Validation failed")
         }
         // Download certificate

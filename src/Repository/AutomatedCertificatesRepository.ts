@@ -2,6 +2,8 @@ import { Sequelize } from "sequelize";
 import { AutomatedCertificate as AutomatedCertificateInteface } from "../Declarations/AutomatedCertificateInterface";
 import { CertificateNotFound } from "../Errors/CertificateNotFound";
 import { AutomatedCertificates } from "../Models/AutomatedCertificates";
+import { MAX_RETRY_ATTEMPTS } from "../Constants/SSL_FOR_FREE";
+import { sendErrorToSlack } from "../Helpers/slackHelper";
 
 export class AutomatedCertificatesRepository {
     /**
@@ -73,6 +75,15 @@ export class AutomatedCertificatesRepository {
             throw new CertificateNotFound(domainName);
         }
         await cert.increment('retryAttempt', { by: 1 })
+        cert.reload();
+
+        const currentRetryValue = cert.get('retryAttempt');
+        if (currentRetryValue == MAX_RETRY_ATTEMPTS) {
+            await sendErrorToSlack(
+                "Last attempt of ssl generation for " + domainName,
+                "SSL CERTIFICATE ATTEMP",
+            )
+        }
     }
 
     public static async resetRetryCounter(domainName: string) {
