@@ -1,5 +1,6 @@
 FROM node:16-slim
-
+ARG GITHUB_TOKEN
+ENV GITHUB_TOKEN ${GITHUB_TOKEN}
 RUN apt-get update -y
 RUN apt-get install zip unzip p7zip-full openssl -y
 
