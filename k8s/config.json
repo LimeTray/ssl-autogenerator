@@ -150,6 +150,15 @@
                     "key": "delayedqueue"
                 }
             }
+        },
+        {
+            "name": "SLACK_HOOKS_HOST",
+            "valueFrom": {
+                "secretKeyRef": {
+                    "name": "limetray-slack",
+                    "key": "url"
+                }
+            }
         }
     ],
     "tier": "backend",
