@@ -3,7 +3,7 @@ FROM node:16-slim
 ARG TOKEN
 
 RUN apt-get update -y
-RUN apt-get install zip unzip p7zip-full openssl -y
+RUN apt-get install zip unzip p7zip-full openssl git python3 -y
 
 WORKDIR /usr/src/app
 RUN git config --global url."https://LimeTray:${TOKEN}@github.com/".insteadOf "https://github.com/"
