@@ -75,7 +75,7 @@ export class AutomatedCertificatesRepository {
             throw new CertificateNotFound(domainName);
         }
         await cert.increment('retryAttempt', { by: 1 })
-        cert.reload();
+        await cert.reload();
 
         const currentRetryValue = cert.get('retryAttempt');
         if (currentRetryValue == MAX_RETRY_ATTEMPTS) {
